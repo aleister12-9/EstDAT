@@ -1,20 +1,3 @@
-
-
-/**
- * @file  vertex.h
- * @author Profesores Programación 2
- * @date 2 February 2021
- * @version 1.0
- * @brief Library to manage ADT Vertex
- *
- * @details 
- * 
- * @see
- */
-
-
-
-
 #ifndef VERTEX_H_
 #define VERTEX_H_
 
