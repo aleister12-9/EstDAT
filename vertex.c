@@ -28,54 +28,63 @@ Status vertex_setField(Vertex *v, char *key, char *value)
 /*----------------------------------------------------------------------------------------*/
 Vertex *vertex_initFromString(char *descr)
 {
-	char buffer[1024];
-	char *token;
-	char *key;
-	char *value;
-	char *p;
-	Vertex *v;
-	Status temp;
+	Vertex *main = NULL;
+	size_t position = 0, position_saver, temp_string_length;
+	short *temp_id = NULL;
 
-	/* Check args: */
-	if (!descr)
-		return NULL;
-
-	/* Allocate memory for vertex: */
-	v = vertex_init();
-	if (!v)
-		return NULL;
-
-	/* Read and tokenize description: */
-	sprintf(buffer, "%s", descr);
-	token = strtok(buffer, " \t\n");
-	while (token)
+	if (!(main = (Vertex *)malloc(sizeof(Vertex))))
 	{
-		p = strchr(token, ':');
-		if (!p)
-			continue;
+		return NULL;
+	}
 
-		*p = '\0';
-		key = token;
-		value = p + 1;
+	/*find position where ID starts*/
+	for (; position < strlen(descr); position++)
+	{
+		if (descr[position] == 'i' && descr[position + 1] == 'd')
+		{
+			break;
+		}
+	}
 
-		temp = vertex_setField(v, key, value);
+	if (position < strlen(descr) - 1)
+	{
+		position += 3;
+		position_saver = position;
 
-		if (temp == ERROR)
+		/*measure ID as array and allocate*/
+		for (; descr[position] != ' ' && descr[position] != '\0'; position++, temp_string_length++)
+			;
+
+		if (!(temp_id = (short *)malloc(temp_string_length * sizeof(short))))
 		{
 			return NULL;
 		}
-		
 
-		token = strtok(NULL, " \t\n");
+		/*return to id starting position and copy id as array of shorts*/
+		position = position_saver;
+		for (size_t counter = 0; descr[position] != ' ' && descr[position] != '\0'; position++, counter++)
+		{
+			temp_id[counter] = descr[position];
+		}
+
+		/*transform to long*/
+		/*assign value to main vertex*/
+
+		free(temp_id);
 	}
 
-	return v;
+	else
+	{
+		/*if ID is not specified, initialize to 0*/
+		main->id = 0;
+	}
+
+	return main;
 }
 
 /*----------------------------------------------------------------------------------------*/
 Vertex *vertex_init()
 {
-
 	Vertex *main = NULL;
 
 	if (!(main = (Vertex *)malloc(sizeof(Vertex))))
