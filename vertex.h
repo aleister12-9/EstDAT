@@ -21,106 +21,30 @@
 #include "types.h"
 #include <stdio.h>
 #include <stdlib.h>
+#define TAG_LENGTH 64
 
-/** 
- * @brief Label to characterize the vertex state (to be used in P2)
- *
- **/
+
 typedef enum {
-    WHITE, /*!< vertex not visited */
-    BLACK,  /*!< vertex visited */
-    ERROR_VERTEX   /*!< not valid vertex */   
+    WHITE, /* vertex not visited */
+    BLACK,  /* vertex visited */
+    ERROR_VERTEX   /* not valid vertex */   
 } Label;
 
-/** 
- * @brief Data structure to implement the ADT Vertex. To be defined 
- * in vertex.c
- *
- **/
-/* START [Vertex] */
 typedef struct _Vertex Vertex;
-/* END [Vertex] */
+
+struct _Vertex 
+{
+    long id;
+    char tag[TAG_LENGTH];
+    Label state;
+}; 
 
 
-/**
- * @brief Constructor. Initialize a vertex.
- * 
- * This function allocates memory for a vertex and sets its fields to 
- * id to 0, tag to "" and state to WHITE.
- *
- * @code
- * // Example of use
- * Vertex * v;
- * v = vertex_init();
- * @endcode
- *
- * @return Return the initialized vertex if it was done correctly, 
- * otherwise return NULL.
-*/
 Vertex * vertex_init ();
-
-
-/**
- * @brief Constructor. Initialize a vertex from its description.
- * 
- * This function allocates memory for a vertex and sets its fields  
- * according to the description provided. A description string is 
- * a set of key:value pairs separated by any amount of whitespace, 
- * where the key can be any of id, tag or state. 
- * No space is allowed in the definition of a key:value pair.
- * The key:value pairs can be provided in any order.
- * 
- * Examples
- *
- * vertex_initFromString("id:1 tag:Toledo state:1");
- * vertex_initFromString("tag:Toledo state:1 id:1");
- * vertex_initFromString("tag:Toledo state:1");
- * vertex_initFromString("id:1 state:1");
- *
- * @param descr String describing the vertex.
- *
- * @return Return the initialized vertex if it was done correctly, 
- * otherwise return NULL.
-*/
 Vertex *vertex_initFromString(char *descr);
-
-/**
- * @brief Destructor. Free the dynamic memory reserved for a vertex .
- *
- * @param v Vertex to free
- */
 void vertex_free (void * v);
-
-
-/**
- * @brief  Gets the vertex id.
- *
- * @param v Vertex pointer
- *
- * @return  Returns the id of the given vertex, or -1 in case of error.
- */
 long vertex_getId (const Vertex * v);
-
-
-/**
- * @brief Gets the vertex tag.
- *
- * @param v Vertex pointer
- *
- * @return Returns a pointer to the tag of the vertex, or NULL in 
- * case of error.
- */
 const char* vertex_getTag (const Vertex * v);
-
-
-/**
- * @brief Gets the state of a given vertex.
- *
- * @param Vertex pointer
- *
- * @return Returns the state of a given vertex, or ERROR_VERTEX in 
- * case of error.
- */
 Label vertex_getState (const Vertex * v);
 
 
