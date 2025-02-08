@@ -4,7 +4,9 @@
 #include "types.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define TAG_LENGTH 64
+#define MAX_DATA 128
 
 
 typedef enum {
