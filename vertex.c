@@ -29,55 +29,100 @@ Status vertex_setField(Vertex *v, char *key, char *value)
 Vertex *vertex_initFromString(char *descr)
 {
 	Vertex *main = NULL;
-	size_t position = 0, position_saver, temp_string_length;
-	short *temp_id = NULL;
+	char *id_position, *tag_position, *state_position;
+	char temp_data[MAX_DATA], descr_position, td_position;
+	long temp_id = 0;
+	size_t id_size;
+
 
 	if (!(main = (Vertex *)malloc(sizeof(Vertex))))
 	{
 		return NULL;
 	}
 
-	/*find position where ID starts*/
-	for (; position < strlen(descr); position++)
+	/*save each position on the description and if not found assign defalut value*/
+
+	id_position = strstr(descr, "id:");
+	tag_position = strstr(descr, "tag:");
+	state_position = strstr(descr, "state:");
+
+	/*checks each pointer and, if not null, continues reading and assigns value*/
+
+	if (id_position)
 	{
-		if (descr[position] == 'i' && descr[position + 1] == 'd')
+		id_position = id_position - descr + 3;
+
+		for (descr_position = id_position, td_position = 0; descr[descr_position] != ' ' && descr[descr_position] != '\0'; descr_position++, td_position++)
 		{
-			break;
-		}
-	}
-
-	if (position < strlen(descr) - 1)
-	{
-		position += 3;
-		position_saver = position;
-
-		/*measure ID as array and allocate*/
-		for (; descr[position] != ' ' && descr[position] != '\0'; position++, temp_string_length++)
-			;
-
-		if (!(temp_id = (short *)malloc(temp_string_length * sizeof(short))))
-		{
-			return NULL;
+			temp_data[td_position] = descr[descr_position];
 		}
 
-		/*return to id starting position and copy id as array of shorts*/
-		position = position_saver;
-		for (size_t counter = 0; descr[position] != ' ' && descr[position] != '\0'; position++, counter++)
+		temp_data[td_position + 1] = '\0';
+		id_size = strlen(temp_data);
+		
+		for (size_t counter; counter <= id_size; counter++)
 		{
-			temp_id[counter] = descr[position];
+			temp_id += temp_data[counter] * pow(10, id_size - counter);
 		}
-
-		/*transform to long*/
-		/*assign value to main vertex*/
-
-		free(temp_id);
+		
+		main->id = temp_id;
 	}
 
 	else
 	{
-		/*if ID is not specified, initialize to 0*/
 		main->id = 0;
 	}
+
+	/*deletes data from temp_data to prevent errors*/
+	memset(temp_data, 0, sizeof(temp_data));
+
+	if (tag_position)
+	{
+		tag_position = tag_position - descr + 4;
+
+		for (descr_position = tag_position, td_position = 0; descr[descr_position] != ' ' && descr[descr_position] != '\0'; descr_position++, td_position++)
+		{
+			temp_data[td_position] = descr[descr_position];
+		}
+		
+		temp_data[td_position + 1] = '\0';
+
+		if (strlen(temp_data) < sizeof(main->tag))
+		{
+			strcpy(main->tag, temp_data);
+		}
+
+		else
+		{
+			/*means value of tag in description larger than supported*/
+			return NULL;
+		}
+	}
+	
+	else
+	{
+		if (sizeof(main->tag) > 2)
+		{
+			strcpy(main->tag, "\"\"");
+		}
+		else
+		{
+			/*means length of tag in vertex is too low to initalize*/
+			return NULL;
+		}
+	}
+	
+	memset(temp_data, 0, sizeof(temp_data));
+
+	
+
+
+
+
+
+	
+
+
 
 	return main;
 }
@@ -94,7 +139,15 @@ Vertex *vertex_init()
 
 	main->state = WHITE;
 	main->id = 0;
-	strcpy(main->tag, "\"\""); /*Revisar*/
+	if (sizeof(main->tag) > 2)
+	{
+		strcpy(main->tag, "\"\"");
+	}
+	else
+	{
+		/*means length of tag in vertex is too low to initalize*/
+		return NULL;
+	}
 
 	return main;
 }
