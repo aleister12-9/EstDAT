@@ -24,12 +24,67 @@ struct _Vertex
     Label state;
 }; 
 
-
+/**
+ * @brief Creates vertex and initializes its values.
+ *
+ * @author Izan Robles
+ *
+ * @return Returns pointer to new vertex
+ */
 Vertex * vertex_init ();
+
+/**
+ * @brief Creates vertex and initializes its values according to
+ *        given description.
+ *
+ * @author Izan Robles
+ * 
+ * @param descr Description of values to initialize new vertex
+ *
+ * @return Returns pointer to new vertex
+ */
 Vertex *vertex_initFromString(char *descr);
+
+/**
+ * @brief Frees all memory associated to given vertex
+ *
+ * @author Izan Robles
+ * 
+ * @param v vertex pointer
+ */
 void vertex_free (void * v);
+
+/**
+ * @brief Extracts id from given vertex
+ *
+ * @author Izan Robles
+ * 
+ * @param v vertex pointer
+ *
+ * @return Returns long with the ID of the given vertex
+ */
 long vertex_getId (const Vertex * v);
+
+/**
+ * @brief Extracts tag from given vertex
+ *
+ * @author Izan Robles
+ * 
+ * @param v vertex pointer
+ *
+ * @return Returns pointer to string with pointers tag
+ */
 const char* vertex_getTag (const Vertex * v);
+
+/**
+ * @brief Extracts state from given vertex
+ *
+ * @author Izan Robles
+ * 
+ * @param v vertex pointer
+ *
+ * @return Returns label with the state of the given vertex
+ */
 Label vertex_getState (const Vertex * v);
 
 
