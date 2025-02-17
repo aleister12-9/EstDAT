@@ -27,7 +27,7 @@ struct _Vertex
 /**
  * @brief Creates vertex and initializes its values.
  *
- * @author Izan Robles
+ * @author Izan Robles & Arturo Pérez
  *
  * @return Returns pointer to new vertex
  */
@@ -37,7 +37,7 @@ Vertex * vertex_init ();
  * @brief Creates vertex and initializes its values according to
  *        given description.
  *
- * @author Izan Robles
+ * @author Teacher @ UAM
  * 
  * @param descr Description of values to initialize new vertex
  *
@@ -48,7 +48,7 @@ Vertex *vertex_initFromString(char *descr);
 /**
  * @brief Frees all memory associated to given vertex
  *
- * @author Izan Robles
+ * @author Izan Robles & Arturo Pérez
  * 
  * @param v vertex pointer
  */
@@ -57,7 +57,7 @@ void vertex_free (void * v);
 /**
  * @brief Extracts id from given vertex
  *
- * @author Izan Robles
+ * @author Izan Robles & Arturo Pérez
  * 
  * @param v vertex pointer
  *
@@ -68,7 +68,7 @@ long vertex_getId (const Vertex * v);
 /**
  * @brief Extracts tag from given vertex
  *
- * @author Izan Robles
+ * @author Izan Robles & Arturo Pérez
  * 
  * @param v vertex pointer
  *
@@ -79,7 +79,7 @@ const char* vertex_getTag (const Vertex * v);
 /**
  * @brief Extracts state from given vertex
  *
- * @author Izan Robles
+ * @author Izan Robles & Arturo Pérez
  * 
  * @param v vertex pointer
  *
