@@ -72,9 +72,9 @@ Vertex *vertex_init()
 
 	v->state = WHITE;
 	v->id = 0;
-	if (sizeof(v->tag) > 0)
+	if (TAG_LENGTH > 0)
 	{
-		strcpy(v->tag, "");
+		v->tag[0] = '\0';
 	}
 	else
 	{
@@ -122,7 +122,7 @@ Label vertex_getState (const Vertex * v)
 {
 	if (v == NULL)
 	{
-		return NULL;
+		return ERROR_VERTEX;
 	}
 	
 	return v->state;
@@ -131,11 +131,105 @@ Label vertex_getState (const Vertex * v)
 /*----------------------------------------------------------------------------------------*/
 Status vertex_setId (Vertex * v, const long id)
 {
+	if (v == NULL || id < 0)
+	{
+		return ERROR;
+	}
+
+	v->id = id;
+
+	return OK;
+}
+
+/*----------------------------------------------------------------------------------------*/
+Status vertex_setTag (Vertex * v, const char * tag)
+{
+	if (v == NULL || strlen(tag) > TAG_LENGTH)
+	{
+		return ERROR;
+	}
+	
+	strcpy(v->tag, tag);
+
+	return OK;
+}
+
+/*----------------------------------------------------------------------------------------*/
+Status vertex_setState (Vertex * v, const Label state)
+{
+	if (v == NULL || (state != WHITE && state != BLACK && state != ERROR_VERTEX))
+	{
+		return ERROR;
+	}
+	
+	v->state = state;
+
+	return OK;
+}
+
+/*----------------------------------------------------------------------------------------*/
+int vertex_cmp (const void * v1, const void * v2)
+{
+	if (v1 == NULL || v2 == NULL)
+	{
+		return 0;
+	}
+
+	const Vertex *vert1 = (const Vertex *)v1;
+	const Vertex *vert2 = (const Vertex *)v2;
+
+	if (strlen(vert1->tag) < 1 || strlen(vert2->tag) < 1 || vert1->id < 0 || vert2->id < 0)
+	{
+		return 0;
+	}
+	
+	if (vert1->id == vert2->id)
+	{
+		return strcmp(vert1->tag, vert2->tag);
+	}
+	
+	return vert1->id - vert2->id;
+}
+
+/*----------------------------------------------------------------------------------------*/
+void * vertex_copy (const void * src)
+{
+	if (src == NULL)
+	{
+		return NULL;
+	}
+
+	const Vertex *source = (const Vertex *)src;
+
+	if (source->id < 0 || strlen(source->tag < 1 || (source->state != WHITE && source->state != BLACK && source->state != ERROR_VERTEX)))
+	{
+		return NULL;
+	}
+	
+	Vertex *v = NULL;
+
+	if (!(v = (Vertex*)malloc(sizeof(Vertex))))
+	{
+		return NULL;
+	}
+
+	v->id = source->id;
+	strcpy(v->tag, source->tag);
+	v->state = source->state;
+
+	return v;
+}
+
+/*----------------------------------------------------------------------------------------*/
+int vertex_print (FILE * pf, const void * v)
+{
 
 
 
 	
 }
+
+
 
 
 

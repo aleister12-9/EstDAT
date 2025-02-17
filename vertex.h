@@ -91,6 +91,8 @@ Label vertex_getState (const Vertex * v);
 
 /**
  * @brief Modifies the id of a given vertex.
+ * 
+ * @author Izan Robles & Arturo Pérez
  *
  * @param v Vertex pointer
  * @param id New vertex id, must be equal or greater than 0
@@ -102,6 +104,8 @@ Status vertex_setId (Vertex * v, const long id);
 
 /**
  * @brief Modifies the tag of a given vertex
+ * 
+ * @author Izan Robles & Arturo Pérez
  *
  * @param v Vertex pointer
  * @param id New vertex tag, must fit in the Vertex
@@ -114,6 +118,8 @@ Status vertex_setTag (Vertex * v, const char * tag);
 /**
  * @brief Modifies the state of a given vertex
  *
+ * @author Izan Robles & Arturo Pérez
+ * 
  * @param v Vertex pointer
  * @param state New vertex state
  *
@@ -122,18 +128,20 @@ Status vertex_setTag (Vertex * v, const char * tag);
 Status vertex_setState (Vertex * v, const Label state);
 
 
-
 /**
  * @brief Compares two vertices.
  *
  * First it compares their ids. If they are equal, then compares
  * their tags.
  * 
- * @param v1,v2 Vertices to compare.
+ * @author Izan Robles & Arturo Pérez
+ * 
+ * @param v1 
+ * @param v2 Vertices to compare.
  *
  * @return It returns an integer less than or greater than zero if
  * id of v1 is found,  respectively, to be less than or be greater 
- * than id of v2. If their are equal, thenreturns the result of 
+ * than id of v2. If their are equal, then returns the result of 
  * comparing their tags. In case of error, returns 0. 
  */
 int vertex_cmp (const void * v1, const void * v2);
@@ -154,12 +162,15 @@ int vertex_cmp (const void * v1, const void * v2);
  * vertex_free(trg);
  * @endcode
  * 
+ * @author Izan Robles & Arturo Pérez
+ * 
  * @param src Original vertex pointer
  *
  * @return Returns the pointer of the copied vertex if everything 
  * went well, or NULL otherwise.
  */
 void * vertex_copy (const void * src);
+
 
 
 /** 
