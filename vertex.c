@@ -223,10 +223,14 @@ void * vertex_copy (const void * src)
 /*----------------------------------------------------------------------------------------*/
 int vertex_print (FILE * pf, const void * v)
 {
+	if (pf == NULL || v == NULL)
+	{
+		return -1;
+	}
 
+	const Vertex *source = (const Vertex *)v;
 
-
-	
+	return fprintf(pf, "[%ld, %s, %d]", source->id, source->tag, source->state);
 }
 
 
