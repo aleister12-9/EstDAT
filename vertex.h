@@ -198,10 +198,9 @@ Status vertex_setState (Vertex * v, const Label state);
  * @param v1 
  * @param v2 Vertices to compare.
  *
- * @return It returns an integer less than or greater than zero if
- * id of v1 is found,  respectively, to be less than or be greater 
- * than id of v2. If their are equal, then returns the result of 
- * comparing their tags. In case of error, returns 0. 
+ * @return 0 if both tags and ids are equal, if v1 > v2, returns 1, if v2 > v1, 
+ * returns -1, if v1 = v2, compares tags, and returns int 1 or -1, respectively, 
+ * if v1 tag > v2 tag and viceversa. Returns -2 if an error is found.
  */
 int vertex_cmp (const void * v1, const void * v2);
 
@@ -256,5 +255,18 @@ void * vertex_copy (const void * src);
  * successfully. If there have been errors returns -1.
  */
 int vertex_print (FILE * pf, const void * v);
+
+/**
+ * @brief Verifies if all the fields of a vertex are valid.
+ * 
+ * @author Izan Robles
+ * @author Arturo Pérez
+ *
+ * @param v Vertex pointer
+ *
+ * @return  Returns TRUE if the vertex is invalid, FALSE otherwise
+ */
+Bool is_invalid_vertex(const Vertex *v);
+
 
 #endif /* VERTEX_H_ */

@@ -170,9 +170,11 @@ Status vertex_setState (Vertex * v, const Label state)
 /*----------------------------------------------------------------------------------------*/
 int vertex_cmp (const void * v1, const void * v2)
 {
+	int comparator;
+
 	if (v1 == NULL || v2 == NULL)
 	{
-		return 0;
+		return -2;
 	}
 
 	const Vertex *vert1 = (const Vertex *)v1;
@@ -180,15 +182,40 @@ int vertex_cmp (const void * v1, const void * v2)
 
 	if (strlen(vert1->tag) < 1 || strlen(vert2->tag) < 1 || vert1->id < 0 || vert2->id < 0)
 	{
-		return 0;
+		return -2;
 	}
-	
-	if (vert1->id == vert2->id)
+
+	if (vert1->id != vert2->id) 
 	{
-		return strcmp(vert1->tag, vert2->tag);
+		if (vert1->id > vert2->id)
+		{
+			return 1;
+		}
+		else if (vert1->id < vert2->id)
+		{
+			return -1;
+		}
 	}
-	
-	return vert1->id - vert2->id;
+
+	else
+	{
+		comparator = strcmp(vert1->tag, vert2->tag);
+		if (comparator > 0)
+		{
+			return 1;
+		}
+		else if (comparator < 0)
+		{
+			return -1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	return -2;
+
 }
 
 /*----------------------------------------------------------------------------------------*/
@@ -201,7 +228,7 @@ void * vertex_copy (const void * src)
 
 	const Vertex *source = (const Vertex *)src;
 
-	if (source->id < 0 || strlen(source->tag < 1 || (source->state != WHITE && source->state != BLACK && source->state != ERROR_VERTEX)))
+	if (is_invalid_vertex(source))
 	{
 		return NULL;
 	}
@@ -231,6 +258,27 @@ int vertex_print (FILE * pf, const void * v)
 	const Vertex *source = (const Vertex *)v;
 
 	return fprintf(pf, "[%ld, %s, %d]", source->id, source->tag, source->state);
+}
+
+/*----------------------------------------------------------------------------------------*/
+Bool is_invalid_vertex(const Vertex *v)
+{
+	if (v->id < 0)
+	{
+		return TRUE;
+	}
+
+	if (strlen(v->tag) < 1 || strlen(v->tag) > TAG_LENGTH)
+	{
+		return TRUE;
+	}
+
+	if (v->state != WHITE && v->state != BLACK && v->state != ERROR_VERTEX)
+	{
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 
